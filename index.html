@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Level Up Life</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              'sans': ['Roboto Mono', 'monospace'],
+              'display': ['Orbitron', 'sans-serif'],
+            },
+            colors: {
+              'system-black': '#0a0a0a',
+              'system-gray': {
+                DEFAULT: '#1a1a1a',
+                light: '#2a2a2a',
+                dark: '#111111',
+              },
+              'system-blue': {
+                DEFAULT: '#00bfff',
+                light: '#7df9ff',
+                dark: '#008fbf',
+              },
+              'system-purple': '#9370db',
+              'system-gold': '#ffffff',
+              'system-red': '#ff4c4c',
+              'system-green': '#4cff4c',
+            },
+            boxShadow: {
+              'glow-blue': '0 0 5px #00bfff, 0 0 10px #00bfff, 0 0 15px #00bfff',
+              'glow-purple': '0 0 5px #9370db, 0 0 10px #9370db, 0 0 15px #9370db',
+              'glow-gold': '0 0 5px #00bfff, 0 0 10px #00bfff',
+              'text-glow-blue': '0 0 8px rgba(0, 191, 255, 0.8)',
+              'text-glow-gold': '0 0 8px rgba(0, 191, 255, 0.8)',
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      .goal-text-style {
+        color: white;
+        text-shadow: 0 0 2px rgba(255, 255, 255, 0.7),
+                     0 0 5px rgba(255, 255, 255, 0.5),
+                     0 0 10px rgba(0, 191, 255, 0.5),
+                     0 0 15px rgba(0, 191, 255, 0.4);
+      }
+      .system-panel {
+        background: rgba(10, 10, 10, 0.7);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(0, 191, 255, 0.3);
+        position: relative;
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+      }
+      .system-panel::before, .system-panel::after {
+        content: '';
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-style: solid;
+        border-color: #00bfff;
+      }
+      .system-panel::before {
+        top: -2px;
+        left: -2px;
+        border-width: 2px 0 0 2px;
+      }
+      .system-panel::after {
+        bottom: -2px;
+        right: -2px;
+        border-width: 0 2px 2px 0;
+      }
+      .system-header-box {
+        border: 1px solid rgba(0, 191, 255, 0.5);
+        padding: 0.25rem 0.75rem;
+        display: inline-block;
+      }
+      .system-stat-bar {
+        background-color: rgba(0, 191, 255, 0.1);
+        border: 1px solid rgba(0, 191, 255, 0.2);
+        height: 8px;
+        width: 100%;
+        position: relative;
+      }
+      .system-stat-bar > div {
+        height: 100%;
+        box-shadow: 0 0 8px var(--glow-color);
+        background-color: var(--bar-color);
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/",
+    "react/": "https://aistudiocdn.com/react@^19.1.1/",
+    "react": "https://aistudiocdn.com/react@^19.1.1",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.15.0"
+  }
+}
+</script>
+</head>
+  <body class="bg-system-black text-white font-sans">
+    <div id="app-background" class="fixed inset-0 bg-cover bg-center" style="background-image: url('https://i.imgur.com/6hA22P8.png'); z-index: -1; opacity: 0.2;"></div>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
