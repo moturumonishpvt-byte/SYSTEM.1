@@ -19,8 +19,7 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
     };
 
     return (
-        <div className="min-h-screen bg-transparent flex items-center justify-center font-sans text-white">
-            <div id="app-background" className="fixed inset-0 bg-cover bg-center" style={{backgroundImage: "url('https://i.imgur.com/6hA22P8.png')", zIndex: -1, opacity: 0.2}}></div>
+        <div className="min-h-screen bg-system-black flex items-center justify-center font-sans text-white">
             <div className="system-panel w-full max-w-md">
                 <div className="text-center border-b-2 border-system-blue/30 pb-4 mb-6">
                     <div className="system-header-box mb-2">

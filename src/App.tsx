@@ -281,7 +281,7 @@ const App: React.FC = () => {
     }
 
   return (
-    <div className="min-h-screen bg-transparent flex text-gray-300 font-sans">
+    <div className="min-h-screen bg-system-black flex text-gray-300 font-sans">
       <NotificationContainer notifications={notifications} onDismiss={dismissNotification} />
       <Sidebar 
         activeView={activeView}
