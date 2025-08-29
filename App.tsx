@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Player, Stat, AppView, DailyQuests, EmergencyQuest, JobQuest, Skill, InventoryItem, ShopItem } from './types';
 import { INITIAL_PLAYER, getInitialDailyQuests, getInitialJobQuests, calculateLevelFromExp, calculateExpForLevel, getRankForLevel, getTitleForLevel, getJobForLevel, calculateMaxHp, calculateMaxMp } from './services/geminiService';
 
@@ -10,16 +10,54 @@ import Sidebar from './components/Sidebar';
 import ResetWindow from './components/ResetWindow';
 import Login from './components/Login';
 
+const LS_PREFIX = 'level-up-life-rpg:';
+
 const App: React.FC = () => {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [player, setPlayer] = useState<Player>(INITIAL_PLAYER);
-    const [dailyQuests, setDailyQuests] = useState<DailyQuests>(getInitialDailyQuests());
-    const [emergencyQuests, setEmergencyQuests] = useState<EmergencyQuest[]>([]);
-    const [jobQuests, setJobQuests] = useState<JobQuest[]>(getInitialJobQuests());
-    const [skills, setSkills] = useState<Skill[]>([]);
-    const [inventory, setInventory] = useState<InventoryItem[]>([]);
-    const [shop, setShop] = useState<ShopItem[]>([]);
-    const [activeView, setActiveView] = useState<AppView>(AppView.Status);
+    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
+        const saved = localStorage.getItem(`${LS_PREFIX}isAuthenticated`);
+        try { return saved ? JSON.parse(saved) : false; } catch { return false; }
+    });
+    const [player, setPlayer] = useState<Player>(() => {
+        const saved = localStorage.getItem(`${LS_PREFIX}player`);
+        try { return saved ? JSON.parse(saved) : INITIAL_PLAYER; } catch { return INITIAL_PLAYER; }
+    });
+    const [dailyQuests, setDailyQuests] = useState<DailyQuests>(() => {
+        const saved = localStorage.getItem(`${LS_PREFIX}dailyQuests`);
+        try { return saved ? JSON.parse(saved) : getInitialDailyQuests(); } catch { return getInitialDailyQuests(); }
+    });
+    const [emergencyQuests, setEmergencyQuests] = useState<EmergencyQuest[]>(() => {
+        const saved = localStorage.getItem(`${LS_PREFIX}emergencyQuests`);
+        try { return saved ? JSON.parse(saved) : []; } catch { return []; }
+    });
+    const [jobQuests, setJobQuests] = useState<JobQuest[]>(() => {
+        const saved = localStorage.getItem(`${LS_PREFIX}jobQuests`);
+        try { return saved ? JSON.parse(saved) : getInitialJobQuests(); } catch { return getInitialJobQuests(); }
+    });
+    const [skills, setSkills] = useState<Skill[]>(() => {
+        const saved = localStorage.getItem(`${LS_PREFIX}skills`);
+        try { return saved ? JSON.parse(saved) : []; } catch { return []; }
+    });
+    const [inventory, setInventory] = useState<InventoryItem[]>(() => {
+        const saved = localStorage.getItem(`${LS_PREFIX}inventory`);
+        try { return saved ? JSON.parse(saved) : []; } catch { return []; }
+    });
+    const [shop, setShop] = useState<ShopItem[]>(() => {
+        const saved = localStorage.getItem(`${LS_PREFIX}shop`);
+        try { return saved ? JSON.parse(saved) : []; } catch { return []; }
+    });
+    const [activeView, setActiveView] = useState<AppView>(() => {
+        return (localStorage.getItem(`${LS_PREFIX}activeView`) as AppView) || AppView.Status
+    });
+
+    useEffect(() => { localStorage.setItem(`${LS_PREFIX}isAuthenticated`, JSON.stringify(isAuthenticated)) }, [isAuthenticated]);
+    useEffect(() => { localStorage.setItem(`${LS_PREFIX}player`, JSON.stringify(player)) }, [player]);
+    useEffect(() => { localStorage.setItem(`${LS_PREFIX}dailyQuests`, JSON.stringify(dailyQuests)) }, [dailyQuests]);
+    useEffect(() => { localStorage.setItem(`${LS_PREFIX}emergencyQuests`, JSON.stringify(emergencyQuests)) }, [emergencyQuests]);
+    useEffect(() => { localStorage.setItem(`${LS_PREFIX}jobQuests`, JSON.stringify(jobQuests)) }, [jobQuests]);
+    useEffect(() => { localStorage.setItem(`${LS_PREFIX}skills`, JSON.stringify(skills)) }, [skills]);
+    useEffect(() => { localStorage.setItem(`${LS_PREFIX}inventory`, JSON.stringify(inventory)) }, [inventory]);
+    useEffect(() => { localStorage.setItem(`${LS_PREFIX}shop`, JSON.stringify(shop)) }, [shop]);
+    useEffect(() => { localStorage.setItem(`${LS_PREFIX}activeView`, activeView) }, [activeView]);
 
     const completeEmergencyQuest = (id: string) => {
         const quest = emergencyQuests.find(q => q.id === id);
@@ -218,6 +256,7 @@ const App: React.FC = () => {
         setInventory([]);
         setShop([]);
         setActiveView(AppView.Status);
+        setIsAuthenticated(false);
     };
 
 
@@ -230,7 +269,6 @@ const App: React.FC = () => {
                     dailyQuests={dailyQuests} setDailyQuests={setDailyQuests} onEndDay={endDay}
                     eQuests={emergencyQuests} setEQuests={setEmergencyQuests} 
                     jQuests={jobQuests} 
-                    // FIX: Pass `setJobQuests` to the `setJQuests` prop. The `setJQuests` variable was not defined in this scope.
                     setJQuests={setJobQuests}
                     player={player} 
                     onCompleteEmergencyQuest={completeEmergencyQuest}

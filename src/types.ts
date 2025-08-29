@@ -103,3 +103,10 @@ export enum AppView {
     Shop = 'Shop',
     Reset = 'Reset',
 }
+
+export interface Notification {
+    id: number;
+    title: string;
+    message: string;
+    type: 'system' | 'levelup' | 'quest' | 'penalty' | 'title';
+}

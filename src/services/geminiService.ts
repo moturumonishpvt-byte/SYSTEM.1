@@ -109,9 +109,11 @@ export const getInitialDailyQuests = (): DailyQuests => ({
         { id: 'diet-4', name: 'Fruit, Oats, Carrots', dp: 30, completed: false },
         { id: 'diet-5', name: 'Water Intake', dp: 40, completed: false, note: 'Target: 6L' },
     ]},
-    discipline: { name: 'Discipline', totalDp: 200, tasks: [
-        { id: 'disc-1', name: 'Screen Time', dp: 100, completed: false, note: '5-8 Hours' },
-        { id: 'disc-2', name: 'Sleep Time', dp: 100, completed: false, note: 'Min 7 hours (9PM-4AM)' },
+    screenTime: { name: 'Screen-Time', totalDp: 100, tasks: [
+        { id: 'disc-1', name: 'Screen Time Limit', dp: 100, completed: false, note: '5-8 Hours' },
+    ]},
+    sleepTime: { name: 'Sleep-Time', totalDp: 100, tasks: [
+        { id: 'disc-2', name: 'Sleep Schedule', dp: 100, completed: false, note: 'Min 7 hours (9PM-4AM)' },
     ]},
     dailyTask: { name: 'One Daily Task', totalDp: 50, tasks: [
         { id: 'task-1', name: 'Unique Daily Task', dp: 50, completed: false, note: 'Varies by day' },
